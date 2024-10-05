@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 import path from 'path'
 
-import dbConnect from './config/dbConnect.js'  // Database connection setup
+import dbConnect from './Config/dbConnect.js'  // Database connection setup
 
 import authRoutes from './Routes/auth.router.js'
 import messageRoutes from './Routes/message.router.js'
@@ -13,6 +13,7 @@ import { app, server } from './Socket/socket.js';
 
 
 dotenv.config();
+dbConnect();
 
 const PORT = process.env.PORT || 5000;
 
@@ -20,6 +21,8 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
+
+
 
 app.use('/api/auth',authRoutes);
 app.use('/api/message',messageRoutes);
@@ -34,6 +37,5 @@ if(process.env.NODE_ENV === 'production'){
 
 
 server.listen(PORT,()=>{
-    dbConnect();
     console.log(`Server is running on port ${PORT}`);  // Server started successfully message
 })

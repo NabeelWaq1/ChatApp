@@ -13,10 +13,9 @@ const generateTokeAndSetCookie = (userId,res) => {
             sameSite: "strict"
         });
 
-        return res.status(200).json([]);
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({success: false, message: "Could'nt  generate token"});
+        return res.status(500).json({success: false, message: "Could'nt generate token"});
 
     }
 }

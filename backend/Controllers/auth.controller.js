@@ -33,11 +33,10 @@ export const SignUp = async (req, res) => {
         const newUser = new User({ username, fullname, password: hashedPassword, gender, profilePic: gender === 'male' ? boyProfilePic : girlProfilePic });
 
         if (newUser) {
-            generateTokenAndSetCookie(newUser?._id, res)
+        await newUser.save();
+        generateTokenAndSetCookie(newUser?._id, res)
 
-            await newUser.save();
-
-            res.json({
+            return res.json({
                 success: true, message: 'User registered successfully', newUser: {
                     _id: newUser._id,
                     username: newUser.username,
@@ -49,7 +48,7 @@ export const SignUp = async (req, res) => {
 
         } else {
 
-            res.status(400).json({ success: false, message: 'Failed to register user' });
+          return res.status(400).json({ success: false, message: 'Failed to register user' });
 
         }
 

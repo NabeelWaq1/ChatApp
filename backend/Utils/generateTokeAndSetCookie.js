@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
 
-const generateTokeAndSetCookie = async (userId,res) => {
+const generateTokeAndSetCookie = (userId,res) => {
     try {
-        const token = await jwt.sign({userId},process.env.JWT_TOKEN,{
+        const token = jwt.sign({userId},process.env.JWT_TOKEN,{
             expiresIn: '15d',
         });
 
-        await res.cookie("jwt",token,{
+         res.cookie("jwt",token,{
             maxAge: 15 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',

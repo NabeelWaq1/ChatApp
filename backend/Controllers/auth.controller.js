@@ -33,7 +33,7 @@ export const SignUp = async (req, res) => {
         const newUser = new User({ username, fullname, password: hashedPassword, gender, profilePic: gender === 'male' ? boyProfilePic : girlProfilePic });
 
         if (newUser) {
-            generateTokenAndSetCookie(newUser._id, res)
+            generateTokenAndSetCookie(newUser?._id, res)
 
             await newUser.save();
 
@@ -74,7 +74,7 @@ export const Login = async (req, res) => {
             return res.status(400).json({success: false, message: 'Invalid credentials'});
         }
 
-        generateTokenAndSetCookie(user._id, res);
+        generateTokenAndSetCookie(user?._id, res);
 
         return res.status(200).json({success: true, message: "Logged in successfully", user:{
             _id: user._id,
